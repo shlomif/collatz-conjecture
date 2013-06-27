@@ -1,35 +1,24 @@
 package X3::Number;
 
-our(@ISA);
+use strict;
+use warnings;
 
-use Shlomif::Gamla::Object;
+use MooX qw/late/;
 
-@ISA=qw(Shlomif::Gamla::Object);
+has ['var','rem'] => (is => 'rw');
 
-use Error qw(:try);
 use X3::Error::NotTrans;
 
 use overload
-    '""' => sub { my $self = shift; return ($self->get_var() . "*x + " .$self->get_rem()); },
+    '""' => sub { my $self = shift; return ($self->var() . "*x + " .$self->rem()); },
     '<=>' => \&compare;
 
 sub compare
 {
     my ($a,$b) = @_;
-    return (($a->get_var() <=> $b->get_var()) ||
-            ($a->get_rem() <=> $b->get_rem())
+    return (($a->var() <=> $b->var()) ||
+            ($a->rem() <=> $b->rem())
            );
-}
-
-sub initialize
-{
-    my $self = shift;
-
-    my $arg = shift;
-    my $arg2 = shift;
-    $self->set($arg,$arg2);
-
-    return 0;
 }
 
 sub increase
@@ -37,32 +26,13 @@ sub increase
     my $self = shift;
     my $parity = shift;
 
-    my $var = $self->get_var();
+    my $var = $self->var();
     return X3::Number->new(
-        ($var << 1),
-        ($self->get_rem() + ($parity ? $var : 0))
+        {
+            var => ($var << 1),
+            rem => ($self->rem() + ($parity ? $var : 0)),
+        }
     );
-}
-
-sub get_var
-{
-    my $self = shift;
-
-    return $self->{'var'};
-}
-
-sub get_rem
-{
-    my $self = shift;
-
-    return $self->{'rem'};
-}
-
-sub set
-{
-    my $self = shift;
-    @{$self}{qw(var rem)} = @_;
-    return 0;
 }
 
 sub transform
@@ -70,8 +40,8 @@ sub transform
     my $self = shift;
     my $deny_3x = shift || 0;
 
-    my $var = $self->get_var();
-    my $rem = $self->get_rem();
+    my $var = $self->var();
+    my $rem = $self->rem();
 
     if ($var & 0x1)
     {
@@ -94,7 +64,8 @@ sub transform
         $var >>= 1;
         $rem >>= 1;
     }
-    $self->set($var,$rem);
+    $self->var($var);
+    $self->rem($rem);
 
     return 0;
 }
@@ -105,7 +76,7 @@ sub multi_transform
     my $ret;
     while (!($ret = $self->transform(1)))
     {
-        if ($self->get_var() == 0)
+        if ($self->var() == 0)
         {
             return 0;
         }

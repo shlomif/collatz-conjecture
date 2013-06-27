@@ -6,8 +6,8 @@ use warnings;
 use X3::Number;
 use X3::WithLim;
 
-my $n = X3::Number->new(4,3);
-my $t_n = X3::Number->new(4,3);
+my $n = X3::Number->new({var => 4, rem => 3, });
+my $t_n = X3::Number->new({var => 4, rem => 3, });
 my $init_lim = X3::WithLim->new($n,$t_n);
 
 my $max_num_iters = shift(@ARGV) || 10;
