@@ -10,7 +10,7 @@ my $n = X3::Number->new(4,3);
 my $t_n = X3::Number->new(4,3);
 my $init_lim = X3::WithLim->new($n,$t_n);
 
-my ($result, $lims);
+my ($lims);
 
 $lims = [ $init_lim ];
 
@@ -22,12 +22,10 @@ while(@$lims && ($i < $max_num_iters))
     my $new_lims = [];
     foreach my $l (@$lims)
     {
-        $result = $l->transform();
-        if (! $result)
+        if (my $result = $l->transform())
         {
-            next;
+            push @$new_lims, @$result;
         }
-        push @$new_lims, @$result;
     }
     $lims = $new_lims;
 }
