@@ -9,16 +9,16 @@ use Shlomif::Gamla::Object;
 use Error qw(:try);
 use X3::Error::NotTrans;
 
-use overload 
+use overload
     '""' => sub { my $self = shift; return ($self->get_var() . "*x + " .$self->get_rem()); },
     '<=>' => \&compare;
 
 sub compare
 {
-    my ($a,$b) = @_; 
-    return (($a->get_var() <=> $b->get_var()) || 
+    my ($a,$b) = @_;
+    return (($a->get_var() <=> $b->get_var()) ||
             ($a->get_rem() <=> $b->get_rem())
-           );    
+           );
 }
 
 sub initialize
@@ -36,8 +36,8 @@ sub increase
 {
     my $self = shift;
     my $parity = shift;
-    
-    my $var = $self->get_var();    
+
+    my $var = $self->get_var();
     return X3::Number->new(
         ($var << 1),
         ($self->get_rem() + ($parity ? $var : 0))
@@ -78,7 +78,7 @@ sub transform
         # If var is not even we don't know anything - so throw an exception
         return 1; # throw X3::Error::NotTrans;
     }
-    
+
     if ($rem & 0x1)
     {
         if ($deny_3x)
