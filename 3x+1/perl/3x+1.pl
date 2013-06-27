@@ -10,13 +10,11 @@ my $n = X3::Number->new(4,3);
 my $t_n = X3::Number->new(4,3);
 my $init_lim = X3::WithLim->new($n,$t_n);
 
-my ($lims);
-
-$lims = [ $init_lim ];
-
 my $max_num_iters = shift(@ARGV) || 10;
 
 my $i = 3;
+my $lims = [ $init_lim ];
+
 while(@$lims && ($i < $max_num_iters))
 {
     my $new_lims = [];
