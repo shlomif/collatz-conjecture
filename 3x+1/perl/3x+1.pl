@@ -36,7 +36,7 @@ continue
     my $num_lims = scalar(@$lims);
     my $total = (2**$i);
     my $ratio = $num_lims/$total;
-    
+
     print "num_lims=$num_lims\ntotal=$total\nratio=$ratio\n";
     print "\n";
     $i++;
