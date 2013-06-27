@@ -1,6 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use strict;
+use warnings;
 
 use X3::Number;
 use X3::WithLim;
