@@ -8,8 +8,8 @@ our(@ISA);
 
 @ISA=qw(Shlomif::Gamla::Object);
 
-use overload '""' => 
-    sub { 
+use overload '""' =>
+    sub {
         my $self = shift;
         return "n = " . $self->{'n'} . "\nT^i(n) = " . $self->{'t_n'} . "\n";
     };
@@ -31,7 +31,7 @@ sub transform
     my ($n,$t_n) = (@$self{qw(n t_n)});
 
     my $ret;
-       
+
     while (($t_n >= $n))
     {
         $ret = $t_n->transform();
@@ -48,13 +48,13 @@ sub transform
             {
                 my $next_t_n = $t_n->increase($parity);
                 $next_t_n->multi_transform();
-                push @results, 
+                push @results,
                     X3::WithLim->new(
                         $n->increase($parity),
                         $next_t_n
                     );
             }
-            return \@results;        
+            return \@results;
         }
     }
 
