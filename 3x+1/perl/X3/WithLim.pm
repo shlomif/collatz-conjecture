@@ -1,34 +1,26 @@
 package X3::WithLim;
 
+use strict;
+use warnings;
+
+use MooX qw/late/;
+
 use X3::Number;
 
-use Shlomif::Gamla::Object;
-
-our(@ISA);
-
-@ISA=qw(Shlomif::Gamla::Object);
+has ['n','t_n'] => (is => 'rw');
 
 use overload '""' =>
     sub {
         my $self = shift;
-        return "n = " . $self->{'n'} . "\nT^i(n) = " . $self->{'t_n'} . "\n";
+        return "n = " . $self->n() . "\nT^i(n) = " . $self->t_n() . "\n";
     };
-
-sub initialize
-{
-    my ($self,$n,$t_n) = @_;
-
-    $self->{'n'} = $n;
-    $self->{'t_n'} = $t_n;
-
-    return 0;
-}
 
 sub transform
 {
     my $self = shift;
 
-    my ($n,$t_n) = (@$self{qw(n t_n)});
+    my $n = $self->n;
+    my $t_n = $self->t_n;
 
     my $ret;
 
@@ -50,8 +42,10 @@ sub transform
                 $next_t_n->multi_transform();
                 push @results,
                     X3::WithLim->new(
-                        $n->increase($parity),
-                        $next_t_n
+                        {
+                            n => $n->increase($parity),
+                            t_n => $next_t_n,
+                        }
                     );
             }
             return \@results;
