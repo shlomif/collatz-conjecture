@@ -10,7 +10,7 @@ my $n = X3::Number->new(4,3);
 my $t_n = X3::Number->new(4,3);
 my $init_lim = X3::WithLim->new($n,$t_n);
 
-my ($result, $lims, $new_lims);
+my ($result, $lims);
 
 $lims = [ $init_lim ];
 
@@ -19,7 +19,7 @@ my $max_num_iters = shift(@ARGV) || 10;
 my $i = 3;
 while(@$lims && ($i < $max_num_iters))
 {
-    $new_lims = [];
+    my $new_lims = [];
     foreach my $l (@$lims)
     {
         $result = $l->transform();
