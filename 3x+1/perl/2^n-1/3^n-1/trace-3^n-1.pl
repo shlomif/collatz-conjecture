@@ -1,6 +1,8 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use strict;
+use warnings;
+
 use Math::GMP qw(:constant);
 
 sub base_rep
@@ -15,7 +17,7 @@ sub base_rep
         $s = ($n % $b) . $s;
         $n = ($n - ($n%$b)) / $b;
     }
-    continue 
+    continue
     {
         $i++;
     }

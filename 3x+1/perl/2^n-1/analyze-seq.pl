@@ -24,7 +24,7 @@ my $i = 0;
 for($i=0;$i<10;$i++)
 {
     print join("", reverse(@prefix)), "\n";
-    my @new_prefix = @prefix;    
+    my @new_prefix = @prefix;
     add(\@new_prefix, [0, @prefix]);
     add(\@new_prefix, [0, 1]);
     while($new_prefix[-1] == 0)

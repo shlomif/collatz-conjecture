@@ -19,7 +19,7 @@ sub binary_rep
         }
         $n = ($n - ($n%2)) / 2;
     }
-    continue 
+    continue
     {
         $i++;
     }
