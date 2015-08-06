@@ -55,7 +55,7 @@ for my $n (1 .. 1_000_000_000_000)
         {
             if (substr($seq, $i, 1) ne substr($wanted_seq, $i, 1))
             {
-                return $i-1;
+                return $i;
             }
         }
         return $l;
