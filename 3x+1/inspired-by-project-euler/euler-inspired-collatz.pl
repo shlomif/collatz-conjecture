@@ -48,6 +48,8 @@ for my $n (1 .. 1_000_000_000_000)
 {
     my $seq = seq(Math::GMP->new($n));
 
+    # print "N=$n Seq=$seq\n";
+
     my $l = min(length($seq), length($wanted_seq));
 
     my $has_l = sub {
@@ -64,9 +66,12 @@ for my $n (1 .. 1_000_000_000_000)
     if ($has_l > length($has_seq))
     {
         my $d = ($n - $last_n);
-        printf "Diff = 0b%s ; 0t%s\n", base($d, 2), base($d, 3);
+        if ($last_n)
+        {
+            printf "Diff = 0b%s ; 0t%s\n", base($d, 2), base($d, 3);
+        }
         $last_n = $n;
-        $has_seq = $seq;
+        $has_seq = substr($seq, 0, $has_l);
 
         if ($has_seq =~ /\A\Q$wanted_seq\E/)
         {
