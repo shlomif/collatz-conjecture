@@ -51,7 +51,7 @@ for my $n (1 .. 1_000_000_000_000)
     my $l = min(length($seq), length($wanted_seq));
 
     my $has_l = sub {
-        for my $i (1 .. $l)
+        for my $i (0 .. $l-1)
         {
             if (substr($seq, $i, 1) ne substr($wanted_seq, $i, 1))
             {
