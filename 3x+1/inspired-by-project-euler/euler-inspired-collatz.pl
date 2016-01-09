@@ -152,7 +152,6 @@ for my $l (1 .. length($input_seq)-1)
 
     my $exact_n = find_exact_seq($sub_seq);
     my $u_n = find_wanted_seq($last_n, $sub_seq.'u');
-    my $d_n = find_wanted_seq($last_n, $sub_seq.'d');
 
     print "{ l=$l }\n";
     if (defined $exact_n)
@@ -163,15 +162,15 @@ for my $l (1 .. length($input_seq)-1)
     {
         print "D[exact] = NONE\n";
     }
-    print "D[d] = " . as_bin($d_n-$last_n) . "\n";
-    print "D[u] = " . as_bin($u_n-$last_n) . "\n";
-
-    if (substr($input_seq, $l, 1) eq 'u')
+    my $next_n;
+    foreach my $step ('d', 'u')
     {
-        $last_n = $u_n;
+        my $step_n = find_wanted_seq($last_n, $sub_seq . $step);
+        printf ("D[%s] = %s\n", $step, as_bin($step_n - $last_n));
+        if (substr($input_seq, $l, 1) eq $step)
+        {
+            $next_n = $step_n;
+        }
     }
-    else
-    {
-        $last_n = $d_n;
-    }
+    $last_n = $next_n;
 }
