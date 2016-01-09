@@ -54,32 +54,9 @@ sub find_wanted_seq
     {
         my $seq = seq(Math::GMP->new($n));
 
-        # print "N=$n Seq=$seq\n";
-
-        my $l = min(length($seq), length($wanted_seq));
-
-        my $has_l = sub {
-            for my $i (0 .. $l-1)
-            {
-                if (substr($seq, $i, 1) ne substr($wanted_seq, $i, 1))
-                {
-                    return $i;
-                }
-            }
-            return $l;
-        }->();
-
-        if ($has_l > length($has_seq))
+        if ($seq =~ /\A\Q$wanted_seq\E/)
         {
-            my $d = ($n - $last_n);
-            # printf "Diff = 0b%s ; 0t%s\n", base($d, 2), base($d, 3);
-            $last_n = $n;
-            $has_seq = substr($seq, 0, $has_l);
-
-            if ($has_seq =~ /\A\Q$wanted_seq\E/)
-            {
-                return $n;
-            }
+            return $n;
         }
     }
     continue
@@ -150,10 +127,8 @@ for my $l (1 .. length($input_seq)-1)
 {
     my $sub_seq = substr($input_seq, 0, $l);
 
-    my $exact_n = find_exact_seq($sub_seq);
-    my $u_n = find_wanted_seq($last_n, $sub_seq.'u');
-
     print "{ l=$l }\n";
+    my $exact_n = find_exact_seq($sub_seq);
     if (defined $exact_n)
     {
         print "D[exact] = " . as_bin($exact_n-$last_n) . "\n";
