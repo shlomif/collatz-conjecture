@@ -127,7 +127,7 @@ for my $l (1 .. length($input_seq)-1)
 {
     my $sub_seq = substr($input_seq, 0, $l);
 
-    print "{ l=$l }\n";
+    print "{ l=$l seq=< $sub_seq > }\n";
     my $exact_n = find_exact_seq($sub_seq);
     if (defined $exact_n)
     {
