@@ -131,6 +131,18 @@ sub find_exact_seq
     }
 }
 
+sub base_wrapper
+{
+    my $ret = base(@_);
+    return length($ret) ? $ret : 0;
+}
+
+sub as_bin
+{
+    my ($n) = @_;
+    return '0b' . base_wrapper($n, 2);
+}
+
 my $input_seq = shift(@ARGV);
 
 my $last_n = 1;
@@ -145,14 +157,14 @@ for my $l (1 .. length($input_seq)-1)
     print "{ l=$l }\n";
     if (defined $exact_n)
     {
-        print "D[exact] = 0b" . base($exact_n-$last_n, 2) . "\n";
+        print "D[exact] = " . as_bin($exact_n-$last_n) . "\n";
     }
     else
     {
         print "D[exact] = NONE\n";
     }
-    print "D[d] = 0b" . base($d_n-$last_n, 2) . "\n";
-    print "D[u] = 0b" . base($u_n-$last_n, 2) . "\n";
+    print "D[d] = " . as_bin($d_n-$last_n) . "\n";
+    print "D[u] = " . as_bin($u_n-$last_n) . "\n";
 
     if (substr($input_seq, $l, 1) eq 'u')
     {
