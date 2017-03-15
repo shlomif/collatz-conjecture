@@ -47,8 +47,6 @@ sub find_wanted_seq
 {
     my ($n, $wanted_seq) = @_;
 
-    my $has_seq = '';
-    my $last_n = 0;
     N:
     while (1)
     {
@@ -61,7 +59,7 @@ sub find_wanted_seq
     }
     continue
     {
-        $n++;
+        ++$n;
     }
 }
 
@@ -122,30 +120,23 @@ sub as_bin
 
 my $input_seq = shift(@ARGV);
 
-my $last_n = 1;
 for my $l (1 .. length($input_seq)-1)
 {
     my $sub_seq = substr($input_seq, 0, $l);
 
-    print "{ l=$l seq=< $sub_seq > }\n";
-    my $exact_n = find_exact_seq($sub_seq);
-    if (defined $exact_n)
+    print "{ seq prefix = < $sub_seq > }\n";
+    my $prefix_n = find_wanted_seq(1, $sub_seq);
+    if (defined $prefix_n)
     {
-        print "D[exact] = " . as_bin($exact_n-$last_n) . "\n";
+        print "    n with <$sub_seq> = " . as_bin($prefix_n) . "\n";
     }
     else
     {
-        print "D[exact] = NONE\n";
+        die "Foo $sub_seq!";
     }
-    my $next_n;
     foreach my $step ('d', 'u')
     {
-        my $step_n = find_wanted_seq($last_n, $sub_seq . $step);
-        printf ("D[%s] = %s\n", $step, as_bin($step_n - $last_n));
-        if (substr($input_seq, $l, 1) eq $step)
-        {
-            $next_n = $step_n;
-        }
+        my $step_n = find_wanted_seq($prefix_n, $sub_seq . $step);
+        printf ("    m[%s] = %s\n        diff of m[%s] - n = %s\n", $step, as_bin($step_n), $step, as_bin($step_n - $prefix_n));
     }
-    $last_n = $next_n;
 }
