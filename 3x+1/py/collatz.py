@@ -25,8 +25,9 @@
 
 def main():
     STEP = 10 ** 7
-    k = 101
-    max_k = STEP
+    k = 265550 * 10 ** 6
+    # k = STEP
+    max_k = k + STEP
     while True:
         k += 2
         r = k
