@@ -36,9 +36,8 @@ def main():
         r = k
         while r >= k:
             if r & 1:
-                r = (r * 3 + 1) >> 1
-            else:
-                r >>= 1
+                r += ((r << 1) | 1)
+            r >>= 1
         if k >= max_k:
             max_k += STEP
             print("Reached {}".format(max_k), flush=True)
