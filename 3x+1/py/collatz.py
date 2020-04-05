@@ -25,14 +25,14 @@
 
 def main():
     STEP = 10 ** 7
-    k = 265550 * 10 ** 6
-    if not k & 1:
+    k = 265540 * 10 ** 6
+    while ((k & 0b11) != 3):
         k -= 1
     # k = STEP
     max_k = k + STEP
     max_k += (STEP - max_k % STEP)
     while True:
-        k += 2
+        k += 4
         r = k
         while r >= k:
             if r & 1:
