@@ -52,13 +52,13 @@ int main()
                 mpz_mul(r, r, three);
                 mpz_add(r, r, one);
             }
-            mpz_tdiv_q_2exp(r, r, 1);
+            mpz_fdiv_q_2exp(r, r, 1);
         }
         if (mpz_cmp(k, max_k) >= 0)
         {
-            mpz_add(max_k, max_k, STEP);
             gmp_printf("Reached %Zd\n", max_k);
             fflush(stdout);
+            mpz_add(max_k, max_k, STEP);
         }
     }
     return 0;
