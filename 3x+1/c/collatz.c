@@ -33,16 +33,16 @@ int main()
     mpz_init_set_str(three, "3", 0);
     mpz_t one;
     mpz_init_set_str(one, "1", 0);
-    mpz_t two;
-    mpz_init_set_str(two, "2", 0);
+    mpz_t four;
+    mpz_init_set_str(four, "4", 0);
     mpz_t k;
-    mpz_init_set_str(k, "101", 0);
+    mpz_init_set_str(k, "403", 0);
     mpz_t max_k;
     mpz_init(max_k);
     mpz_set(max_k, STEP);
     while (true)
     {
-        mpz_add(k, k, two);
+        mpz_add(k, k, four);
         mpz_t r;
         mpz_init_set(r, k);
         while (mpz_cmp(r, k) >= 0)

@@ -25,19 +25,25 @@
 
 def main():
     STEP = 10 ** 7
-    k = 265540 * 10 ** 6
+    k = 276900 * 10 ** 6
     while ((k & 0b11) != 3):
         k -= 1
     # k = STEP
     max_k = k + STEP
     max_k += (STEP - max_k % STEP)
+    max_c = 0
     while True:
         k += 4
         r = k
+        c = 0
         while r >= k:
             if r & 1:
                 r += ((r << 1) | 1)
             r >>= 1
+            c += 1
+        if c > max_c:
+            max_c = c
+            print('max_c =', max_c)
         if k >= max_k:
             max_k += STEP
             print("Reached {}".format(max_k), flush=True)
