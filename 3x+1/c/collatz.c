@@ -54,6 +54,7 @@ int main()
             }
             mpz_fdiv_q_2exp(r, r, 1);
         }
+        mpz_clear(r);
         if (mpz_cmp(k, max_k) >= 0)
         {
             gmp_printf("Reached %Zd\n", max_k);
