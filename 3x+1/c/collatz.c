@@ -29,10 +29,6 @@ int main()
 {
     mpz_t STEP;
     mpz_init_set_str(STEP, "10000000", 0);
-    mpz_t three;
-    mpz_init_set_str(three, "3", 0);
-    mpz_t one;
-    mpz_init_set_str(one, "1", 0);
     mpz_t four;
     mpz_init_set_str(four, "4", 0);
     mpz_t k;
@@ -45,15 +41,19 @@ int main()
         mpz_add(k, k, four);
         mpz_t r;
         mpz_init_set(r, k);
-        while (mpz_cmp(r, k) >= 0)
+        do
         {
             if (mpz_tstbit(r, 0))
             {
-                mpz_mul(r, r, three);
-                mpz_add(r, r, one);
+                mpz_t twice;
+                mpz_init(twice);
+                mpz_mul_2exp(twice, r, 1);
+                mpz_setbit(twice, 0);
+                mpz_add(r, r, twice);
+                mpz_clear(twice);
             }
             mpz_fdiv_q_2exp(r, r, 1);
-        }
+        } while (mpz_cmp(r, k) >= 0);
         mpz_clear(r);
         if (mpz_cmp(k, max_k) >= 0)
         {
