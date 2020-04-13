@@ -45,7 +45,7 @@ int main()
         mpz_add(k, k, four);
         mpz_t r;
         mpz_init_set(r, k);
-        while (mpz_cmp(r, k) >= 0)
+        do
         {
             if (mpz_tstbit(r, 0))
             {
@@ -54,6 +54,7 @@ int main()
             }
             mpz_fdiv_q_2exp(r, r, 1);
         }
+        while (mpz_cmp(r, k) >= 0);
         mpz_clear(r);
         if (mpz_cmp(k, max_k) >= 0)
         {

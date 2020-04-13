@@ -26,6 +26,7 @@
 def main():
     STEP = 10 ** 7
     k = 276900 * 10 ** 6
+    k = 100
     while ((k & 0b11) != 3):
         k -= 1
     # k = STEP
