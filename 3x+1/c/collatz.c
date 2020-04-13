@@ -40,22 +40,27 @@ int main()
     mpz_t max_k;
     mpz_init(max_k);
     mpz_set(max_k, STEP);
+    mpz_t r;
+    mpz_init(r);
+#if 0
+    unsigned long l = 0;
+    while ((++l) < 100000000)
+#else
     while (true)
+#endif
     {
         mpz_add(k, k, four);
-        mpz_t r;
-        mpz_init_set(r, k);
+        mpz_set(r, k);
         do
         {
             if (mpz_tstbit(r, 0))
             {
-                mpz_mul(r, r, three);
-                mpz_add(r, r, one);
+                mpz_mul_ui(r, r, 3);
+                mpz_add_ui(r, r, 1);
             }
             mpz_fdiv_q_2exp(r, r, 1);
         }
         while (mpz_cmp(r, k) >= 0);
-        mpz_clear(r);
         if (mpz_cmp(k, max_k) >= 0)
         {
             gmp_printf("Reached %Zd\n", max_k);

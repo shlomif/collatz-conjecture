@@ -46,8 +46,8 @@ def main():
             max_c = c
             print('max_c =', max_c)
         if k >= max_k:
-            max_k += STEP
             print("Reached {}".format(max_k), flush=True)
+            max_k += STEP
 
 
 if __name__ == "__main__":
