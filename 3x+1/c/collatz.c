@@ -28,15 +28,15 @@ SOFTWARE.
 int main()
 {
     mpz_t STEP;
-    mpz_init_set_str(STEP, "10000000", 0);
+    mpz_init_set_ui(STEP, 10000000);
     mpz_t three;
-    mpz_init_set_str(three, "3", 0);
+    mpz_init_set_ui(three, 3);
     mpz_t one;
-    mpz_init_set_str(one, "1", 0);
+    mpz_init_set_ui(one, 1);
     mpz_t four;
-    mpz_init_set_str(four, "4", 0);
+    mpz_init_set_ui(four, 4);
     mpz_t k;
-    mpz_init_set_str(k, "403", 0);
+    mpz_init_set_ui(k, 403);
     mpz_t max_k;
     mpz_init(max_k);
     mpz_set(max_k, STEP);
@@ -59,8 +59,7 @@ int main()
                 mpz_add_ui(r, r, 1);
             }
             mpz_fdiv_q_2exp(r, r, 1);
-        }
-        while (mpz_cmp(r, k) >= 0);
+        } while (mpz_cmp(r, k) >= 0);
         if (mpz_cmp(k, max_k) >= 0)
         {
             gmp_printf("Reached %Zd\n", max_k);
