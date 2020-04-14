@@ -21,18 +21,45 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#include <gmp.h>
 #include <stdbool.h>
 #include <stdio.h>
 
+#if 1
+typedef unsigned __int128 mpz_t;
+#define mpz_init_set_ui(dest, src) dest = (src)
+#define mpz_init(dest) dest = 0
+#define mpz_fdiv_q_2exp(dest, dest2, count) dest >>= (count)
+#define mpz_add_ui(dest, dest2, count) dest += (count)
+#define cmp(r, k) (r >= k)
+#define tstbit(r) ((r) & 1)
+#define mpz_set(dest, src) dest = (src)
+#define mpz_add(dest, dest2, src) dest += (src)
+#define mpz_mul_ui(dest, dest2, src) dest *= (src)
+
+static inline void print(const mpz_t k)
+{
+    if (k == 0)
+    {
+        return;
+    }
+    print(k / 10);
+    printf("%u", (unsigned)(k % 10));
+}
+static inline void gmp_printf(__attribute__((unused)) const char *const fmt, mpz_t k)
+{
+    printf("Reached ");
+    print(k);
+    printf("\n");
+}
+#else
+#include <gmp.h>
+#define cmp(r, k) (mpz_cmp((r), (k)) >= 0)
+#define tstbit(r) mpz_tstbit(r, 0)
+#endif
 int main()
 {
     mpz_t STEP;
     mpz_init_set_ui(STEP, 10000000);
-    mpz_t three;
-    mpz_init_set_ui(three, 3);
-    mpz_t one;
-    mpz_init_set_ui(one, 1);
     mpz_t four;
     mpz_init_set_ui(four, 4);
     mpz_t k;
@@ -53,14 +80,14 @@ int main()
         mpz_set(r, k);
         do
         {
-            if (mpz_tstbit(r, 0))
+            if (tstbit(r))
             {
                 mpz_mul_ui(r, r, 3);
                 mpz_add_ui(r, r, 1);
             }
             mpz_fdiv_q_2exp(r, r, 1);
-        } while (mpz_cmp(r, k) >= 0);
-        if (mpz_cmp(k, max_k) >= 0)
+        } while (cmp(r, k));
+        if (cmp(k, max_k))
         {
             gmp_printf("Reached %Zd\n", max_k);
             fflush(stdout);
