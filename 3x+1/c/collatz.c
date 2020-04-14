@@ -21,17 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 
-#if 1
+#define USE_128
+#ifdef USE_128
 typedef unsigned __int128 mpz_t;
+#if 1
+const mpz_t overflow = (((mpz_t)3) << ((mpz_t)(128 - 2)));
+#else
+const mpz_t overflow = ~((mpz_t)0);
+#endif
 #define mpz_init_set_ui(dest, src) dest = (src)
 #define mpz_init(dest) dest = 0
 #define mpz_fdiv_q_2exp(dest, dest2, count) dest >>= (count)
 #define mpz_add_ui(dest, dest2, count) dest += (count)
 #define cmp(r, k) (r >= k)
-#define tstbit(r) ((r) & 1)
+#define tstbit(r) ((r)&1)
 #define mpz_set(dest, src) dest = (src)
 #define mpz_add(dest, dest2, src) dest += (src)
 #define mpz_mul_ui(dest, dest2, src) dest *= (src)
@@ -45,7 +52,8 @@ static inline void print(const mpz_t k)
     print(k / 10);
     printf("%u", (unsigned)(k % 10));
 }
-static inline void gmp_printf(__attribute__((unused)) const char *const fmt, mpz_t k)
+static inline void gmp_printf(
+    __attribute__((unused)) const char *const fmt, mpz_t k)
 {
     printf("Reached ");
     print(k);
@@ -84,6 +92,13 @@ int main()
             {
                 mpz_mul_ui(r, r, 3);
                 mpz_add_ui(r, r, 1);
+#if 0
+                print(r);
+                printf("\n");
+#endif
+#ifdef USE_128
+                assert((r & overflow) == 0);
+#endif
             }
             mpz_fdiv_q_2exp(r, r, 1);
         } while (cmp(r, k));
