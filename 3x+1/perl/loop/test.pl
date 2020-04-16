@@ -8,6 +8,7 @@ use integer;
 
 # use Math::GMP;
 
+STDOUT->autoflush(1);
 my $i;
 for ( $i = 2 ; $i < 1e9 ; ++$i )
 {
@@ -15,17 +16,14 @@ for ( $i = 2 ; $i < 1e9 ; ++$i )
     my $r = $i;
     while ( $r >= $i )
     {
-        if ( $r % 2 == 0 )
-        {
-            $r /= 2;
-        }
-        else
+        if ( $r & 1 )
         {
             $r *= 3;
             ++$r;
         }
+        $r >>= 1;
     }
-    if ( $i % 100000 == 0 )
+    unless ( $i % 1000000 )
     {
         print "$i\n";
     }
