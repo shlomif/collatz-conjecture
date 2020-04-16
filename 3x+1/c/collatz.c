@@ -67,7 +67,7 @@ static inline void gmp_printf(
 int main()
 {
     mpz_t STEP;
-    mpz_init_set_ui(STEP, 10000000);
+    mpz_init_set_ui(STEP, 100000000);
     mpz_t four;
     mpz_init_set_ui(four, 4);
     mpz_t k;
