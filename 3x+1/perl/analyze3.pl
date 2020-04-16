@@ -1,18 +1,21 @@
-#!/usr/bin/perl
-open I, "<dump.txt";
-while(<I>)
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use autodie;
+
+open my $in_fh, '<', 'dump.txt';
+while ( my $l = <$in_fh> )
 {
-	if (/^n = (\d+)\*x/)
+    if ( my ($n) = $l =~ /\An = ([0-9]+)\*x/ )
     {
-        $n = $1;
-        $_ = <I>;
-        / = (\d+)\*x/;
-        $t = $1;
-        if ($t == $n)
+        if ( my ($t) = ( ( my $l2 = <$in_fh> ) =~ / = ([0-9]+)\*x/ ) )
         {
-            print $_;
+            if ( $t == $n )
+            {
+                print $l2;
+            }
         }
     }
 }
-close(I);
-
+close($in_fh);
