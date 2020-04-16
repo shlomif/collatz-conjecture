@@ -10,7 +10,7 @@ use integer;
 
 STDOUT->autoflush(1);
 my $i;
-for ( $i = 2 ; $i < 1e9 ; ++$i )
+for ( $i = 2 ; $i < 1000000000 ; ++$i )
 {
     #my $r = $i;Math::GMP->new($i);
     my $r = $i;
