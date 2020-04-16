@@ -1,27 +1,31 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 
 use strict;
+use warnings;
+use autodie;
+use bytes;
+use integer;
 
-use Math::GMP;
+# use Math::GMP;
 
 my $i;
-for($i=1;$i<1e9;$i++)
+for ( $i = 2 ; $i < 1e9 ; ++$i )
 {
     #my $r = $i;Math::GMP->new($i);
     my $r = $i;
-    while ($r != 1)
+    while ( $r >= $i )
     {
-        if ($r % 2 == 0)
+        if ( $r % 2 == 0 )
         {
             $r /= 2;
         }
         else
         {
             $r *= 3;
-            $r++;
+            ++$r;
         }
     }
-    if ($i % 1000 == 0)
+    if ( $i % 100000 == 0 )
     {
         print "$i\n";
     }
