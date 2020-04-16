@@ -10,6 +10,8 @@ use integer;
 
 STDOUT->autoflush(1);
 my $i;
+my $STEP      = 1000000;
+my $milestone = $STEP;
 for ( $i = 2 ; $i < 1000000000 ; ++$i )
 {
     #my $r = $i;Math::GMP->new($i);
@@ -23,8 +25,9 @@ for ( $i = 2 ; $i < 1000000000 ; ++$i )
         }
         $r >>= 1;
     }
-    unless ( $i % 1000000 )
+    if ( $i == $milestone )
     {
         print "$i\n";
+        $milestone += $STEP;
     }
 }
